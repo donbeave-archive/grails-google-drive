@@ -204,7 +204,7 @@ public class GoogleDrive {
     public File uploadFile(java.io.File file, String rootFolderName) throws IOException {
         String folderId = rootFolderName != null ? getFolderId(drive, rootFolderName) : null;
 
-        if (folderId != null)
+        if (folderId == null)
             folderId = insertFolder(drive, rootFolderName).getId();
 
         File fileMetadata = new File();
@@ -220,7 +220,7 @@ public class GoogleDrive {
     public File uploadFile(MultipartFile multipartFile, String rootFolderName) throws IOException {
         String folderId = rootFolderName != null ? getFolderId(drive, rootFolderName) : null;
 
-        if (folderId != null)
+        if (folderId == null)
             folderId = insertFolder(drive, rootFolderName).getId();
 
         File fileMetadata = new File();
