@@ -18,3 +18,6 @@
  * @author <a href='mailto:donbeave@gmail.com'>Alexey Zhokhov</a>
  */
 google.drive.enabled = true
+google.drive.credentials.path = System.getProperty('catalina.base') ?
+        "${System.getProperty('catalina.base')}/data/oauth-credentials" :
+        "${System.getProperty('user.home')}/.oauth-credentials";

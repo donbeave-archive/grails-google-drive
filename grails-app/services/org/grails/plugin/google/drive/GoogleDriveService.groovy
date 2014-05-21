@@ -41,7 +41,7 @@ class GoogleDriveService {
             if (!config.secret) {
                 throw new RuntimeException('Google Drive API secret is not specified')
             }
-            drive = GoogleDrive.init(config.key, config.secret, 'grails')
+            drive = new GoogleDrive(config.key, config.secret, config.credentials.path, 'grails')
         }
     }
 

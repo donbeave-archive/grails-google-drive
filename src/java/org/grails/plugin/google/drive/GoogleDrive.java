@@ -65,11 +65,6 @@ public class GoogleDrive {
     static final String FOLDER_TYPE = "application/vnd.google-apps.folder";
     static final String FOLDERS_QUERY = "mimeType='" + FOLDER_TYPE + "' and trashed=false";
 
-    /**
-     * This is the directory that will be used under the user's home directory where OAuth tokens will be stored.
-     */
-    private static final String CREDENTIALS_DIRECTORY = ".oauth-credentials";
-
     private static final Tika TIKA = new Tika();
 
     static class ProgressListener implements MediaHttpUploaderProgressListener {
@@ -97,16 +92,18 @@ public class GoogleDrive {
 
     }
 
-    static Drive init(String clientId, String clientSecret, String credentialStore) throws IOException, GeneralSecurityException {
+    static Drive init(String clientId, String clientSecret, String credentialsPath, String credentialStore)
+            throws IOException, GeneralSecurityException {
         // Set up OAuth 2.0 access of protected resources
         // using the refresh and access tokens, automatically
         // refreshing the access token when it expires
-        Credential credential = authorize(clientId, clientSecret, credentialStore, HTTP_TRANSPORT, JSON_FACTORY);
+        Credential credential = authorize(clientId, clientSecret, credentialsPath, credentialStore, HTTP_TRANSPORT,
+                JSON_FACTORY);
 
         return new Drive(HTTP_TRANSPORT, JSON_FACTORY, credential);
     }
 
-    static Credential authorize(String clientId, String clientSecret, String credentialStore,
+    static Credential authorize(String clientId, String clientSecret, String credentialsPath, String credentialStore,
                                 HttpTransport httpTransport, JsonFactory jsonFactory) throws IOException {
         GoogleClientSecrets.Details installedDetails = new GoogleClientSecrets.Details();
         installedDetails.setClientId(clientId);
@@ -115,9 +112,7 @@ public class GoogleDrive {
         GoogleClientSecrets clientSecrets = new GoogleClientSecrets();
         clientSecrets.setInstalled(installedDetails);
 
-        // This creates the credentials datastore at ~/.oauth-credentials/${credentialDatastore}
-        FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(
-                new java.io.File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
+        FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new java.io.File(credentialsPath));
         DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialStore);
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory,
@@ -195,8 +190,9 @@ public class GoogleDrive {
         return null;
     }
 
-    public GoogleDrive(String clientId, String secretId) throws IOException, GeneralSecurityException {
-        drive = init(clientId, secretId, null);
+    public GoogleDrive(String clientId, String clientSecret, String credentialsPath, String credentialStore)
+            throws IOException, GeneralSecurityException {
+        drive = init(clientId, clientSecret, credentialsPath, credentialStore);
     }
 
     private Drive drive;
