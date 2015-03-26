@@ -1,4 +1,4 @@
-grails-google-drive [![Build Status](https://travis-ci.org/donbeave/grails-gwtp.svg?branch=master)](https://travis-ci.org/donbeave/grails-gwtp)
+grails-google-drive [![Build Status](https://travis-ci.org/donbeave/grails-google-drive.svg?branch=master)](https://travis-ci.org/donbeave/grails-google-drive)
 ===================
 
 Grails Google Drive Plugin
