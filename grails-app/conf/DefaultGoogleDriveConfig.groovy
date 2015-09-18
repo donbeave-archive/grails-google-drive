@@ -21,3 +21,7 @@ google.drive.enabled = true
 google.drive.credentials.path = System.getProperty('catalina.base') ?
         "${System.getProperty('catalina.base')}/data/oauth-credentials" :
         "${System.getProperty('user.home')}/.oauth-credentials";
+
+google.drive.credentials.type='service'
+google.drive.credentials.filePath='/Users/dstieglitz/Grails Google Drive Plugin-7b32fc08891a.json'
+google.drive.scopes = ['https://www.googleapis.com/auth/drive']

@@ -23,10 +23,10 @@ grails.project.dependency.resolution = {
         compile 'com.google.oauth-client:google-oauth-client-jetty:1.18.0-rc', {
             excludes 'httpclient', 'junit'
         }
-
         compile 'org.apache.tika:tika-core:1.5', {
             excludes 'xercesImpl', 'xmlParserAPIs', 'xml-apis', 'groovy'
         }
+        compile 'org.bouncycastle:bcprov-jdk16:1.46'
     }
 
     plugins {

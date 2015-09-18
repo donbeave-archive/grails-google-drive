@@ -21,6 +21,7 @@ import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInsta
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.media.MediaHttpUploader;
 import com.google.api.client.googleapis.media.MediaHttpUploaderProgressListener;
 import com.google.api.client.http.ByteArrayContent;
@@ -29,6 +30,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.SecurityUtils;
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.drive.Drive;
@@ -42,8 +44,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.PrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author <a href='mailto:donbeave@gmail.com'>Alexey Zhokhov</a>
@@ -99,6 +104,19 @@ public class GoogleDrive {
         // refreshing the access token when it expires
         Credential credential = authorize(clientId, clientSecret, credentialsPath, credentialStore, HTTP_TRANSPORT,
                 JSON_FACTORY);
+
+        return new Drive(HTTP_TRANSPORT, JSON_FACTORY, credential);
+    }
+
+    static Drive init(String emailAddress, String privateKey, List<String> scopes) throws IOException, GeneralSecurityException  {
+
+        GoogleCredential credential = new GoogleCredential.Builder()
+                .setTransport(HTTP_TRANSPORT)
+                .setJsonFactory(JSON_FACTORY)
+                .setServiceAccountId(emailAddress)
+                .setServiceAccountPrivateKey(PrivateKeyUtil.readPrivateKey(privateKey))
+                .setServiceAccountScopes(scopes)
+                .build();
 
         return new Drive(HTTP_TRANSPORT, JSON_FACTORY, credential);
     }
@@ -193,6 +211,10 @@ public class GoogleDrive {
     public GoogleDrive(String clientId, String clientSecret, String credentialsPath, String credentialStore)
             throws IOException, GeneralSecurityException {
         drive = init(clientId, clientSecret, credentialsPath, credentialStore);
+    }
+
+    public GoogleDrive(String emailAddress, String privateKey, List<String> scopes) throws IOException, GeneralSecurityException {
+        drive = init(emailAddress, privateKey, scopes);
     }
 
     private Drive drive;
