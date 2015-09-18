@@ -19,7 +19,6 @@ class GoogleDriveServiceIntegrationSpec extends IntegrationSpec {
 
         when:
         list = googleDriveService.list()
-        println list
 
         then:
         list.size() > 0
