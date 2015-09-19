@@ -34,15 +34,69 @@ class GoogleDriveService {
     def init() {
         def config = grailsApplication.config.google.drive
 
+
         if (config.enabled) {
-            if (!config.key) {
-                throw new RuntimeException('Google Drive API key is not specified')
+            switch (config.credentials.type) {
+                case 'web':
+                    drive = getWebConfiguredDrive(config.credentials.filePath)
+                    break;
+                case 'service':
+                    drive = getServiceConfiguredDrive(config.credentials.filePath)
+                    break;
             }
-            if (!config.secret) {
-                throw new RuntimeException('Google Drive API secret is not specified')
-            }
-            drive = new GoogleDrive(config.key, config.secret, config.credentials.path, 'grails')
         }
+    }
+
+    private def getWebConfiguredDrive(configFilePath) {
+        def config = grailsApplication.config.google.drive
+        def key = null
+        def secret = null
+        def jsonConfig = null
+
+        try {
+            def jsonFile = new java.io.File(configFilePath)
+            jsonConfig = JSONConfigLoader.getConfigFromJSON('web', jsonFile)
+        } catch (IOException e) {
+            log.error e.message
+        }
+
+        key = jsonConfig?.key ?: config.key
+        if (!key) {
+            throw new RuntimeException('Google Drive API key is not specified')
+        }
+
+        secret = jsonConfig?.secret ?: config.secret
+        if (!secret) {
+            throw new RuntimeException('Google Drive API secret is not specified')
+        }
+
+        return new GoogleDrive(key, secret, config.credentials.path, 'grails')
+    }
+
+    private def getServiceConfiguredDrive(configFilePath) {
+        def config = grailsApplication.config.google.drive
+        def key = null
+        def secret = null
+        def jsonConfig = null
+
+        try {
+            def jsonFile = new java.io.File(configFilePath)
+            jsonConfig = JSONConfigLoader.getConfigFromJSON('service', jsonFile)
+        } catch (IOException e) {
+            log.error e.message
+        }
+
+        key = jsonConfig?.email ?: config.key
+        if (!key) {
+            throw new RuntimeException('Google Drive API email is not specified for service account')
+        }
+
+        secret = jsonConfig?.privateKey ?: config.secret
+        if (!secret) {
+            throw new RuntimeException('Google Drive API private key is not specified for service account')
+        }
+
+        return new GoogleDrive(key, secret, config.scopes)
     }
 
     List<File> list() {
