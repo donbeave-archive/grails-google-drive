@@ -15,6 +15,6 @@ Specify scopes using `google.drive.scopes` and the accepted string values provid
 Copyright and license
 ---------------------
 
-Copyright 2013-2015 Alexey Zhokhov and Dan Stieglitz under the [Apache License, Version 2.0](LICENSE). Supported by [Polusharie][polusharie].
+Copyright 2013-2015 Alexey Zhokhov and Dan Stieglitz under the [Apache License, Version 2.0](LICENSE). Supported by [AZ][zhokhov].
 
-[polusharie]: http://www.polusharie.com
+[zhokhov]: http://www.zhokhov.com
