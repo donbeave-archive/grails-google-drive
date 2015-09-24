@@ -34,7 +34,7 @@ class GoogleDriveGrailsPlugin {
 Brief summary/description of the plugin.
 '''
 
-    def documentation = "http://grails.org/plugin/google-drive"
+    def documentation = 'https://github.com/donbeave/grails-google-drive'
 
     def license = 'APACHE'
 
