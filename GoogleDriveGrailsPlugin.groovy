@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- import grails.util.Environment
+import grails.util.Environment
 
 /**
  * @author <a href='mailto:donbeave@gmail.com'>Alexey Zhokhov</a>
@@ -28,7 +28,7 @@ class GoogleDriveGrailsPlugin {
     ]
 
     def title = 'Google Drive Plugin'
-    def author = 'Alexey Zhokhov'
+    def author = 'Alexey Zhokhov, Dan Stieglitz'
     def authorEmail = 'donbeave@gmail.com'
     def description = '''\
 Brief summary/description of the plugin.
@@ -38,7 +38,10 @@ Brief summary/description of the plugin.
 
     def license = 'APACHE'
 
-    def developers = [[name: 'Alexey Zhokhov', email: 'donbeave@gmail.com']]
+    def developers = [
+            [name: 'Alexey Zhokhov', email: 'donbeave@gmail.com'],
+            [name: 'Dan Stieglitz', email: 'dstieglitz@stainlesscode.com']
+    ]
 
     def issueManagement = [system: 'GITHUB',
                            url   : 'https://github.com/donbeave/grails-google-drive/issues']
