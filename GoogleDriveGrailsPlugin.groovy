@@ -20,7 +20,7 @@ import grails.util.Environment
  */
 class GoogleDriveGrailsPlugin {
 
-    def version = '0.1-SNAPSHOT'
+    def version = '0.1.0'
     def grailsVersion = '2.0 > *'
 
     def pluginExcludes = [
