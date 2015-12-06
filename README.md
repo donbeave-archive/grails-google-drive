@@ -1,5 +1,7 @@
-grails-google-drive [![Build Status](https://travis-ci.org/donbeave/grails-google-drive.svg?branch=master)](https://travis-ci.org/donbeave/grails-google-drive)
-===================
+# grails-google-drive
+
+[![Build Status](https://travis-ci.org/donbeave/grails-google-drive.svg?branch=master)](https://travis-ci.org/donbeave/grails-google-drive)
+[![Analytics](https://ga-beacon.appspot.com/UA-71075299-1/grails-google-drive/main-page)](https://github.com/igrigorik/ga-beacon)
 
 ## Credentials setup
 
@@ -8,8 +10,6 @@ Setup credentails from Google Developer Console. This plugin supports "Web" cred
 ## Scopes
 
 Specify scopes using `google.drive.scopes` and the accepted string values provided by Google. See https://developers.google.com/drive/web/scopes
-
-
 
 
 Copyright and license
